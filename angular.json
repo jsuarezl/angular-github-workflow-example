@@ -2,6 +2,10 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
+  "cli": {
+    "packageManager": "pnpm",
+    "analytics": "bec82b39-645f-4933-b98b-4041d139a734"
+  },
   "projects": {
     "angular-workflow-example": {
       "projectType": "application",
@@ -18,12 +22,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular-workflow-example",
+            "outputPath": {
+              "base": "dist/angular-workflow-example"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -33,7 +40,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -58,9 +66,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -72,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-workflow-example:build:production"
+              "buildTarget": "angular-workflow-example:build:production"
             },
             "development": {
-              "browserTarget": "angular-workflow-example:build:development"
+              "buildTarget": "angular-workflow-example:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-workflow-example:build"
+            "buildTarget": "angular-workflow-example:build"
           }
         },
         "test": {
@@ -106,6 +112,5 @@
         }
       }
     }
-  },
-  "defaultProject": "angular-workflow-example"
+  }
 }
